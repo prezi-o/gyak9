@@ -19,9 +19,18 @@ namespace gyak9.Controllers
 
         // GET api/<JokeController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            FunnyDatabaseContext context = new FunnyDatabaseContext();
+            var keresettvicc = (from x in context.Jokes
+                                where x.JokeSk==id
+                                select x).FirstOrDefault();
+            if (keresettvicc!=null) 
+            { return NotFound($"Nincs #{id} azonosítóval vicc"); }
+            else
+            {
+                return Ok(keresettvicc);
+            }
         }
 
         // POST api/<JokeController>
