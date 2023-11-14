@@ -52,6 +52,12 @@ namespace gyak9.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            FunnyDatabaseContext context = new();
+            var torlendo = (from x in context.Jokes
+                            where x.JokeSk == id
+                            select x).FirstOrDefault();
+            context.Remove(torlendo);
+            context.SaveChanges();
         }
     }
 }
