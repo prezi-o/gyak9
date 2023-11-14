@@ -25,7 +25,7 @@ namespace gyak9.Controllers
             var keresettvicc = (from x in context.Jokes
                                 where x.JokeSk==id
                                 select x).FirstOrDefault();
-            if (keresettvicc!=null) 
+            if (keresettvicc==null) 
             { return NotFound($"Nincs #{id} azonosítóval vicc"); }
             else
             {
@@ -35,8 +35,11 @@ namespace gyak9.Controllers
 
         // POST api/<JokeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Joke ujvicc)
         {
+            FunnyDatabaseContext context = new();
+            context.Jokes.Add(ujvicc);
+            context.SaveChanges();
         }
 
         // PUT api/<JokeController>/5
